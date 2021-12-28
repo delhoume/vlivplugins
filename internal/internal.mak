@@ -2,7 +2,7 @@ CC  = cl
 RC  = rc
 LD  = link
 
-VLIVDIR = ..\..
+VLIVDIR = ..\..\vliv\src
 
 TIFF = tiff-4.3.0\libtiff	
 TIFFFLAGS = -I$(TIFF)

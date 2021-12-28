@@ -6,7 +6,7 @@
 CC  = cl
 LD  = link
 
-VLIVDIR = ..\..
+VLIVDIR = ..\..\vliv\src
 
 DEBUG=/Ox 
 

@@ -1,13 +1,13 @@
 CC  = cl
 LD  = link
 
-VLIVDIR = ..\..
+VLIVDIR = ..\..\vliv\src
 
 WINDOWSCODECSDIR="c:\program files\microsoft sdks\windows\v6.0"
 
 DEBUG=/Ox 
 
-CFLAGS = /nologo /W3 $(DEBUG) /D_CRT_SECURE_NO_DEPRECATE /DWIN32 /DWINDOWS /I. /I$(VLIVDIR) /I$(WINDOWSCODECSDIR)\include
+CFLAGS = /nologo /MD /W3 $(DEBUG) /D_CRT_SECURE_NO_DEPRECATE /DWIN32 /DWINDOWS /I. /I$(VLIVDIR) /I$(WINDOWSCODECSDIR)\include
 
 SYSLIBS = ole32.lib $(WINDOWSCODECSDIR)\lib\windowscodecs.lib user32.lib
 
