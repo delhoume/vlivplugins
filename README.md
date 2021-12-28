@@ -8,9 +8,6 @@ Plugins for various image formats
   - PPM P6
 - AVI
 - WEBP
-- Lyapunov fractal (sample)
-- Newton fractal (sample)
-- Debug (sample)
 - JPEG2000
 - QOI
 - WIC
