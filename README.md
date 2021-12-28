@@ -13,3 +13,4 @@ Plugins for various image formats
 - Debug (sample)
 - JPEG2000
 - QOI
+- WIC
