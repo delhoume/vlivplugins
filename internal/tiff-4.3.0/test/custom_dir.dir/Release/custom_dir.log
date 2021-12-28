@@ -1,0 +1,6 @@
+﻿  Building Custom Rule C:/Users/FredericDelhoume/Downloads/srcvliv2.5.2/plugins/internal/tiff-4.3.0/test/CMakeLists.txt
+  custom_dir.c
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\test\custom_dir.c(233,2): warning C4996: 'unlink': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _unlink. See online help for details.
+  getopt.c
+  Generating Code...
+  custom_dir.vcxproj -> C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\test\Release\custom_dir.exe

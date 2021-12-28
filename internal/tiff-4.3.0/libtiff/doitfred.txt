@@ -1,0 +1,2 @@
+cl /MD /Ox /c /I. /I..\..\libjpeg-turbo2.1.2\include /I..\..\zlib-1.2.11 *.c
+lib /out:libtiff.lib *.obj

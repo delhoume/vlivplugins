@@ -1,0 +1,12 @@
+﻿  Building Custom Rule C:/Users/FredericDelhoume/Downloads/srcvliv2.5.2/plugins/internal/tiff-4.3.0/tools/CMakeLists.txt
+  fax2ps.c
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\tools\fax2ps.c(241,36): warning C4996: 'ctime': This function or variable may be unsafe. Consider using ctime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\tools\fax2ps.c(416,45): warning C4244: 'function': conversion from 'intptr_t' to 'int', possible loss of data
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\tools\fax2ps.c(398,7): warning C4996: 'tmpfile': This function or variable may be unsafe. Consider using tmpfile_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\tools\fax2ps.c(406,14): warning C4996: 'read': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _read. See online help for details.
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\tools\fax2ps.c(407,21): warning C4996: 'write': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _write. See online help for details.
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\tools\fax2ps.c(414,2): warning C4996: 'fileno': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _fileno. See online help for details.
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\tools\fax2ps.c(416,34): warning C4996: 'fileno': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _fileno. See online help for details.
+  getopt.c
+  Generating Code...
+  fax2ps.vcxproj -> C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\tools\Release\fax2ps.exe

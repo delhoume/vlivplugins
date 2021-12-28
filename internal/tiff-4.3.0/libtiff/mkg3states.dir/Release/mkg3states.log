@@ -1,0 +1,6 @@
+﻿  Building Custom Rule C:/Users/FredericDelhoume/Downloads/srcvliv2.5.2/plugins/internal/tiff-4.3.0/libtiff/CMakeLists.txt
+  mkg3states.c
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\libtiff\mkg3states.c(409,10): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  getopt.c
+  Generating Code...
+  mkg3states.vcxproj -> C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\libtiff\Release\mkg3states.exe

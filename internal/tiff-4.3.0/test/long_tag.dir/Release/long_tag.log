@@ -1,0 +1,8 @@
+﻿  Building Custom Rule C:/Users/FredericDelhoume/Downloads/srcvliv2.5.2/plugins/internal/tiff-4.3.0/test/CMakeLists.txt
+  long_tag.c
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\test\long_tag.c(144,2): warning C4996: 'unlink': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _unlink. See online help for details.
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\test\long_tag.c(150,2): warning C4996: 'unlink': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _unlink. See online help for details.
+  check_tag.c
+  getopt.c
+  Generating Code...
+  long_tag.vcxproj -> C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\test\Release\long_tag.exe

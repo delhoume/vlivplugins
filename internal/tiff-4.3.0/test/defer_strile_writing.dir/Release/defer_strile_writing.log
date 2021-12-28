@@ -1,0 +1,10 @@
+﻿  Building Custom Rule C:/Users/FredericDelhoume/Downloads/srcvliv2.5.2/plugins/internal/tiff-4.3.0/test/CMakeLists.txt
+  defer_strile_writing.c
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\test\defer_strile_writing.c(145,66): warning C4244: '=': conversion from 'tmsize_t' to 'int', possible loss of data
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\test\defer_strile_writing.c(154,57): warning C4244: '=': conversion from 'tmsize_t' to 'int', possible loss of data
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\test\defer_strile_writing.c(181,69): warning C4244: '=': conversion from 'tmsize_t' to 'int', possible loss of data
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\test\defer_strile_writing.c(204,60): warning C4244: '=': conversion from 'tmsize_t' to 'int', possible loss of data
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\test\defer_strile_writing.c(219,5): warning C4996: 'unlink': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _unlink. See online help for details.
+  getopt.c
+  Generating Code...
+  defer_strile_writing.vcxproj -> C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\test\Release\defer_strile_writing.exe

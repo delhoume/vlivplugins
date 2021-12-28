@@ -1,0 +1,19 @@
+﻿  Building Custom Rule C:/Users/FredericDelhoume/Downloads/srcvliv2.5.2/plugins/internal/tiff-4.3.0/test/CMakeLists.txt
+  defer_strile_loading.c
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\test\defer_strile_loading.c(82,66): warning C4244: '=': conversion from 'tmsize_t' to 'int', possible loss of data
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\test\defer_strile_loading.c(93,57): warning C4244: '=': conversion from 'tmsize_t' to 'int', possible loss of data
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\test\defer_strile_loading.c(127,73): warning C4244: '=': conversion from 'tmsize_t' to 'int', possible loss of data
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\test\defer_strile_loading.c(146,70): warning C4244: '=': conversion from 'uint64_t' to 'int', possible loss of data
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\test\defer_strile_loading.c(150,71): warning C4244: '=': conversion from 'uint64_t' to 'int', possible loss of data
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\test\defer_strile_loading.c(188,64): warning C4244: '=': conversion from 'tmsize_t' to 'int', possible loss of data
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\test\defer_strile_loading.c(206,70): warning C4244: '=': conversion from 'uint64_t' to 'int', possible loss of data
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\test\defer_strile_loading.c(210,71): warning C4244: '=': conversion from 'uint64_t' to 'int', possible loss of data
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\test\defer_strile_loading.c(243,63): warning C4244: '=': conversion from 'uint64_t' to 'int', possible loss of data
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\test\defer_strile_loading.c(247,66): warning C4244: '=': conversion from 'uint64_t' to 'int', possible loss of data
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\test\defer_strile_loading.c(256,69): warning C4244: '=': conversion from 'uint64_t' to 'int', possible loss of data
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\test\defer_strile_loading.c(260,72): warning C4244: '=': conversion from 'uint64_t' to 'int', possible loss of data
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\test\defer_strile_loading.c(102,9): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\test\defer_strile_loading.c(296,5): warning C4996: 'unlink': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _unlink. See online help for details.
+  getopt.c
+  Generating Code...
+  defer_strile_loading.vcxproj -> C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\test\Release\defer_strile_loading.exe

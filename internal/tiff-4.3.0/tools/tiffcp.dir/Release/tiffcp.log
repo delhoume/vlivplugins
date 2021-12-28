@@ -1,0 +1,20 @@
+﻿  Building Custom Rule C:/Users/FredericDelhoume/Downloads/srcvliv2.5.2/plugins/internal/tiff-4.3.0/tools/CMakeLists.txt
+  tiffcp.c
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\tools\tiffcp.c(942,72): warning C4267: '+=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\tools\tiffcp.c(937,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\tools\tiffcp.c(1533,22): warning C4244: 'function': conversion from 'int64_t' to 'int', possible loss of data
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\tools\tiffcp.c(1537,14): warning C4244: 'function': conversion from 'int64_t' to 'int', possible loss of data
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\tools\tiffcp.c(1499,1): warning C4244: 'initializing': conversion from 'tmsize_t' to 'uint32_t', possible loss of data
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\tools\tiffcp.c(1500,1): warning C4244: 'initializing': conversion from 'tmsize_t' to 'uint32_t', possible loss of data
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\tools\tiffcp.c(1550,1): warning C4244: 'initializing': conversion from 'tmsize_t' to 'uint32_t', possible loss of data
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\tools\tiffcp.c(1551,1): warning C4244: 'initializing': conversion from 'tmsize_t' to 'uint32_t', possible loss of data
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\tools\tiffcp.c(1696,1): warning C4244: 'initializing': conversion from 'tmsize_t' to 'uint32_t', possible loss of data
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\tools\tiffcp.c(1697,1): warning C4244: 'initializing': conversion from 'tmsize_t' to 'uint32_t', possible loss of data
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\tools\tiffcp.c(1816,17): warning C4244: '+=': conversion from 'tsize_t' to 'uint32_t', possible loss of data
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\tools\tiffcp.c(1748,1): warning C4244: 'initializing': conversion from 'tmsize_t' to 'uint32_t', possible loss of data
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\tools\tiffcp.c(1750,1): warning C4244: 'initializing': conversion from 'tmsize_t' to 'uint32_t', possible loss of data
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\tools\tiffcp.c(1751,1): warning C4244: 'initializing': conversion from 'tsize_t' to 'int', possible loss of data
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\tools\tiffcp.c(1794,1): warning C4244: 'initializing': conversion from 'tsize_t' to 'int', possible loss of data
+  getopt.c
+  Generating Code...
+  tiffcp.vcxproj -> C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\tools\Release\tiffcp.exe

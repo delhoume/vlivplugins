@@ -1,0 +1,131 @@
+CC=cl
+
+BASEOBJS = jas_cm.obj jas_debug.obj jas_getopt.obj jas_icc.obj jas_iccdata.obj jas_image.obj jas_init.obj jas_malloc.obj jas_seq.obj jas_stream.obj jas_string.obj jas_tmr.obj jas_tvp.obj jas_version.obj
+
+JP2OBJS = jp2_cod.obj jp2_dec.obj jp2_enc.obj
+
+JPCOBJS = jpc_bs.obj jpc_cs.obj jpc_dec.obj jpc_enc.obj jpc_math.obj jpc_mct.obj jpc_mqcod.obj jpc_mqdec.obj jpc_mqenc.obj jpc_qmfb.obj jpc_t1cod.obj jpc_t1dec.obj jpc_t1enc.obj jpc_t2cod.obj jpc_t2dec.obj jpc_t2enc.obj jpc_tagtree.obj jpc_tsfb.obj jpc_util.obj
+
+INCLUDEDIR=..\include
+
+BASEDIR = ..\base
+JP2DIR = ..\jp2
+JPCDIR = ..\jpc
+
+CFLAGS = /I$(INCLUDEDIR) /I.
+
+all: jasper.lib
+
+jasper.lib: $(BASEOBJS) $(JP2OBJS) $(JPCOBJS)
+	$(LIB) /out:jasper.lib $(BASEOBJS) $(JP2OBJS) $(JPCOBJS)
+
+
+jas_cm.obj: $(BASEDIR)\jas_cm.c
+	$(CC) /c $(CFLAGS) $(BASEDIR)\jas_cm.c
+
+jas_debug.obj: $(BASEDIR)\jas_debug.c
+	$(CC) /c $(CFLAGS) $(BASEDIR)\jas_debug.c
+
+jas_getopt.obj: $(BASEDIR)\jas_getopt.c
+	$(CC) /c $(CFLAGS) $(BASEDIR)\jas_getopt.c
+
+jas_icc.obj:  $(BASEDIR)\jas_icc.c
+	$(CC) /c $(CFLAGS)  $(BASEDIR)\jas_icc.c
+
+jas_iccdata.obj:  $(BASEDIR)\jas_iccdata.c
+	$(CC) /c $(CFLAGS)  $(BASEDIR)\jas_iccdata.c
+
+jas_image.obj: $(BASEDIR)\jas_image.c
+	$(CC) /c $(CFLAGS) $(BASEDIR)\jas_image.c
+
+jas_init.obj:  $(BASEDIR)\jas_init.c
+	$(CC) /c $(CFLAGS)  $(BASEDIR)\jas_init.c
+
+jas_malloc.obj:  $(BASEDIR)\jas_malloc.c
+	$(CC) /c $(CFLAGS)  $(BASEDIR)\jas_malloc.c
+
+jas_seq.obj:  $(BASEDIR)\jas_seq.c
+	$(CC) /c $(CFLAGS)  $(BASEDIR)\jas_seq.c
+
+jas_stream.obj:  $(BASEDIR)\jas_stream.c
+	$(CC) /c $(CFLAGS)  $(BASEDIR)\jas_stream.c
+
+jas_string.obj:  $(BASEDIR)\jas_string.c
+	$(CC) /c $(CFLAGS)  $(BASEDIR)\jas_string.c
+
+jas_tmr.obj:  $(BASEDIR)\jas_tmr.c
+	$(CC) /c $(CFLAGS)  $(BASEDIR)\jas_tmr.c
+
+jas_tvp.obj:  $(BASEDIR)\jas_tvp.c
+	$(CC) /c $(CFLAGS)  $(BASEDIR)\jas_tvp.c
+
+jas_version.obj: $(BASEDIR)\jas_version.c
+	$(CC) /c $(CFLAGS) $(BASEDIR)\jas_version.c
+
+
+jp2_cod.obj:  $(JP2DIR)\jp2_cod.c
+	$(CC) /c $(CFLAGS)  $(JP2DIR)\jp2_cod.c
+
+jp2_dec.obj:  $(JP2DIR)\jp2_dec.c
+	$(CC) /c $(CFLAGS)  $(JP2DIR)\jp2_dec.c
+
+jp2_enc.obj: $(JP2DIR)\jp2_enc.c
+	$(CC) /c $(CFLAGS) $(JP2DIR)\jp2_enc.c
+
+
+jpc_bs.obj: $(JPCDIR)\jpc_bs.c
+	$(CC) /c $(CFLAGS) $(JPCDIR)\jpc_bs.c
+
+jpc_cs.obj: $(JPCDIR)\jpc_cs.c
+	$(CC) /c $(CFLAGS) $(JPCDIR)\jpc_cs.c
+
+jpc_dec.obj: $(JPCDIR)\jpc_dec.c
+	$(CC) /c $(CFLAGS) $(JPCDIR)\jpc_dec.c
+
+jpc_enc.obj: $(JPCDIR)\jpc_enc.c
+	$(CC) /c $(CFLAGS) $(JPCDIR)\jpc_enc.c
+
+jpc_math.obj: $(JPCDIR)\jpc_math.c
+	$(CC) /c $(CFLAGS) $(JPCDIR)\jpc_math.c
+
+jpc_mct.obj: $(JPCDIR)\jpc_mct.c
+	$(CC) /c $(CFLAGS) $(JPCDIR)\jpc_mct.c
+
+jpc_mqcod.obj: $(JPCDIR)\jpc_mqcod.c
+	$(CC) /c $(CFLAGS) $(JPCDIR)\jpc_mqcod.c
+
+jpc_mqdec.obj: $(JPCDIR)\jpc_mqdec.c
+	$(CC) /c $(CFLAGS) $(JPCDIR)\jpc_mqdec.c
+
+jpc_mqenc.obj: $(JPCDIR)\jpc_mqenc.c
+	$(CC) /c $(CFLAGS) $(JPCDIR)\jpc_mqenc.c
+
+jpc_qmfb.obj: $(JPCDIR)\jpc_qmfb.c
+	$(CC) /c $(CFLAGS) $(JPCDIR)\jpc_qmfb.c
+
+jpc_t1cod.obj: $(JPCDIR)\jpc_t1cod.c
+	$(CC) /c $(CFLAGS) $(JPCDIR)\jpc_t1cod.c
+
+jpc_t1dec.obj: $(JPCDIR)\jpc_t1dec.c
+	$(CC) /c $(CFLAGS) $(JPCDIR)\jpc_t1dec.c
+
+jpc_t1enc.obj: $(JPCDIR)\jpc_t1enc.c
+	$(CC) /c $(CFLAGS) $(JPCDIR)\jpc_t1enc.c
+
+jpc_t2cod.obj: $(JPCDIR)\jpc_t2cod.c
+	$(CC) /c $(CFLAGS) $(JPCDIR)\jpc_t2cod.c
+
+jpc_t2dec.obj: $(JPCDIR)\jpc_t2dec.c
+	$(CC) /c $(CFLAGS) $(JPCDIR)\jpc_t2dec.c
+
+jpc_t2enc.obj: $(JPCDIR)\jpc_t2enc.c
+	$(CC) /c $(CFLAGS) $(JPCDIR)\jpc_t2enc.c
+
+jpc_tagtree.obj: $(JPCDIR)\jpc_tagtree.c
+	$(CC) /c $(CFLAGS) $(JPCDIR)\jpc_tagtree.c
+
+jpc_tsfb.obj: $(JPCDIR)\jpc_tsfb.c
+	$(CC) /c $(CFLAGS) $(JPCDIR)\jpc_tsfb.c
+
+jpc_util.obj: $(JPCDIR)\jpc_util.c
+	$(CC) /c $(CFLAGS) $(JPCDIR)\jpc_util.c

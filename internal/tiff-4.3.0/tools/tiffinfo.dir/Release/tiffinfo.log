@@ -1,0 +1,5 @@
+﻿  Building Custom Rule C:/Users/FredericDelhoume/Downloads/srcvliv2.5.2/plugins/internal/tiff-4.3.0/tools/CMakeLists.txt
+  tiffinfo.c
+  getopt.c
+  Generating Code...
+  tiffinfo.vcxproj -> C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\tools\Release\tiffinfo.exe

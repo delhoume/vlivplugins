@@ -1,0 +1,11 @@
+﻿  Building Custom Rule C:/Users/FredericDelhoume/Downloads/srcvliv2.5.2/plugins/internal/tiff-4.3.0/contrib/addtiffo/CMakeLists.txt
+  addtiffo.c
+  tif_overview.c
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\contrib\addtiffo\tif_overview.c(168,19): warning C4244: 'return': conversion from 'toff_t' to 'uint32_t', possible loss of data
+  tif_ovrcache.c
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\contrib\addtiffo\tif_ovrcache.c(285,49): warning C4244: '=': conversion from 'toff_t' to 'long', possible loss of data
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\contrib\addtiffo\tif_ovrcache.c(288,55): warning C4244: '=': conversion from 'toff_t' to 'long', possible loss of data
+C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\contrib\addtiffo\tif_ovrcache.c(315,50): warning C4244: '=': conversion from 'toff_t' to 'int', possible loss of data
+  getopt.c
+  Generating Code...
+  addtiffo.vcxproj -> C:\Users\FredericDelhoume\Downloads\srcvliv2.5.2\plugins\internal\tiff-4.3.0\contrib\addtiffo\Release\addtiffo.exe
