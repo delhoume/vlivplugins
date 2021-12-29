@@ -1,8 +1,6 @@
 #include <pnghandler.h>
 #include <png.h>
 
-#include <stdio.h>
-
 static const unsigned int pngtileheight = 256;
 static const unsigned int pngmindim = 2000;
 
@@ -23,13 +21,23 @@ static BOOL OpenPNGImage(ImagePtr img, const TCHAR* name) {
     return TRUE;
 }
 
+void png_win32_read_data(png_structp png_ptr, png_bytep data, size_t length) {
+   DWORD readbytes;
+   if (png_ptr == NULL)
+      return;
+   ReadFile((HANDLE)png_get_io_ptr(png_ptr), data, length, &readbytes, 0);
+   if (readbytes != length)
+      png_error(png_ptr, "Read Error");
+}
+
+
 static void SetPNGDirectory(ImagePtr img, unsigned int which) {
-    FILE* file = fopen(img->name, "rb");
+	HANDLE file = CreateFile(img->name, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
     if (file) {
 	int bitdepth, colortype, itype, ctype, ftype;
 	png_structp pngptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, 0, 0, 0);
 	png_infop pnginfo = png_create_info_struct(pngptr);
-	png_init_io(pngptr, file);
+	png_set_read_fn(pngptr, file, png_win32_read_data);
 	png_read_info(pngptr, pnginfo);
 	png_get_IHDR(pngptr, pnginfo, &img->width, &img->height, &bitdepth, &colortype, &itype, &ctype, &ftype);
 	png_destroy_read_struct(&pngptr, &pnginfo, (png_infopp)0);
@@ -46,13 +54,14 @@ static void SetPNGDirectory(ImagePtr img, unsigned int which) {
 	}
 	img->twidth = img->width;
 	img->numtilesx = 1;
-	fclose(file);
+	CloseHandle(file);
     }
 }
 
+
 static HBITMAP LoadPNGTile(ImagePtr img, HDC hdc, unsigned int x, unsigned int y) {
-    FILE* file = fopen(img->name, "rb");
-    HBITMAP hbitmap = 0;
+    HANDLE file = CreateFile(img->name, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+   HBITMAP hbitmap = 0;
     if (file) {
 	int bitdepth, colortype, itype, ctype, ftype, passes, p;
 	unsigned int h, cpos;
@@ -64,7 +73,7 @@ static HBITMAP LoadPNGTile(ImagePtr img, HDC hdc, unsigned int x, unsigned int y
 	png_structp pngptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, 0, 0, 0);
 	png_infop pnginfo = png_create_info_struct(pngptr);
 	starty = y * img->theight;
-	png_init_io(pngptr, file);
+	png_set_read_fn(pngptr, file, png_win32_read_data);
 	png_read_info(pngptr, pnginfo);
 	png_get_IHDR(pngptr, pnginfo, &width, &height, &bitdepth, &colortype, &itype, &ctype, &ftype);
 	if (colortype == PNG_COLOR_TYPE_PALETTE) png_set_expand(pngptr);
@@ -102,7 +111,7 @@ static HBITMAP LoadPNGTile(ImagePtr img, HDC hdc, unsigned int x, unsigned int y
 	    png_destroy_read_struct(&pngptr, &pnginfo, (png_infopp)0);
 	    MYFREE(temp);
 	}
-	fclose(file);
+	CloseHandle(file);
     }
     return hbitmap;
 }
