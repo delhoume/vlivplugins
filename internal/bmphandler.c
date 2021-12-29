@@ -61,7 +61,6 @@ static RGBQUAD ReadQuad(HANDLE handle) {
 
 #define WIN_NEW	    40
 #define OS2_NEW	    64
-#define WIN_OS2_OLD 12
 #define WIN_V5      124
 
 static void SetBMPDirectory(ImagePtr img, unsigned int which) {
@@ -71,10 +70,12 @@ static void SetBMPDirectory(ImagePtr img, unsigned int which) {
     if (handle) {
 		unsigned int offset;
 		unsigned int headersize;
+		unsigned int headerpos;
 		ReadByte(handle); ReadByte(handle);
 		ReadInt(handle); ReadShort(handle); ReadShort(handle);
 		offset = ReadInt(handle);
 		headersize = ReadInt(handle);
+		headerpos = SetFilePointer(handle, 0, 0, FILE_CURRENT);
 		if ((headersize == WIN_NEW || headersize == OS2_NEW || headersize == WIN_V5)) {
 			img->width = ReadInt(handle);
 			img->height = ReadInt(handle);
@@ -86,13 +87,15 @@ static void SetBMPDirectory(ImagePtr img, unsigned int which) {
 			ReadInt(handle); // vertical resolution
 			ReadInt(handle); // colors used
 			ReadInt(handle); // important colors
+//			DWORD rmask = ReadInt(handle);
+//			DWORD gmask = ReadInt(handle);
+//			DWORD bmask = ReadInt(handle);
+			headerpos = SetFilePointer(handle, 0, 0, FILE_CURRENT) - headerpos;
 		}
-		
-		if (headersize != WIN_OS2_OLD) { // skip remaining header
-			unsigned int bytesleft = headersize - 40;
-			while (bytesleft--) {
-				ReadByte(handle);
-			}
+		// skip remaining header
+		unsigned int bytesleft = headersize - headerpos;
+		while (bytesleft--) {
+			ReadByte(handle);
 		}
 		switch (bmp_internal->bitcount) {
 			// skip palette, not used yet
