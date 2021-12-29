@@ -103,7 +103,7 @@ static void SetBMPDirectory(ImagePtr img, unsigned int which) {
     }
 }
 
-static void FillBMP(BITMAPINFO* bmi, unsigned int idx, void* arg) {
+static void FillBMPPalette(BITMAPINFO* bmi, unsigned int idx, void* arg) {
     struct bmp_internal* bmp_internal = (struct bmp_internal*)arg;
     FILE* file = (FILE*)bmp_internal->file;
     fseek(file, bmp_internal->paloffset, SEEK_SET);
@@ -125,7 +125,7 @@ LoadBMPTile(ImagePtr img, HDC hdc, unsigned int x, unsigned int y) {
 		switch (bitcount) {
 			case 1: case 4: case 8:
 				if (bmpinternal->compression == BI_RGB) {
-					hbitmap = img->helper.CreateIndexedDIBSection(hdc, img->width, img->height, &bits, FillBMP, (void*)bmpinternal);
+					hbitmap = img->helper.CreateIndexedDIBSection(hdc, img->width, img->height, &bits, FillBMPPalette, (void*)bmpinternal);
 				} else {
 					hbitmap = img->helper.CreateDefaultDIBSection(hdc, img->width, img->height, "Unsupported compression", &bits);
 					return hbitmap;
