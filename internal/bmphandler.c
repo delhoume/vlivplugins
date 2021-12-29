@@ -71,7 +71,6 @@ static void SetBMPDirectory(ImagePtr img, unsigned int which) {
     if (handle) {
 		unsigned int offset;
 		unsigned int headersize;
-//		fgetc(handle); fgetc(handle);
 		ReadByte(handle); ReadByte(handle);
 		ReadInt(handle); ReadShort(handle); ReadShort(handle);
 		offset = ReadInt(handle);
