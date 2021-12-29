@@ -63,9 +63,6 @@ static RGBQUAD ReadQuad(HANDLE handle) {
 #define OS2_NEW	    64
 #define WIN_OS2_OLD 12
 #define WIN_V5      124
-#define BI_RGB_COMPRESSION 3
-
-char buffer[100];
 
 static void SetBMPDirectory(ImagePtr img, unsigned int which) {
     struct bmp_internal* bmp_internal = (struct bmp_internal*)img->handler->internal;
@@ -90,8 +87,6 @@ static void SetBMPDirectory(ImagePtr img, unsigned int which) {
 			ReadInt(handle); // vertical resolution
 			ReadInt(handle); // colors used
 			ReadInt(handle); // important colors
-			wsprintf(buffer, "%dx%d b: %d c: %d", img->width, img->height, bmp_internal->bitcount, bmp_internal->compression);
-			OutputDebugString(buffer);
 		}
 		
 		if (headersize != WIN_OS2_OLD) { // skip remaining header
@@ -145,14 +140,14 @@ LoadBMPTile(ImagePtr img, HDC hdc, unsigned int x, unsigned int y) {
 		unsigned int realwidth = (((img->width * bitcount) + 31) & ~31) >> 3;
 		switch (bitcount) {
 			case 1: case 4: case 8:
-				if (bmpinternal->compression == BI_RGB_COMPRESSION) {
+				if (bmpinternal->compression == BI_RGB ) {
 					hbitmap = img->helper.CreateIndexedDIBSection(hdc, img->width, img->height, &bits, FillBMPPalette, (void*)bmpinternal);
 				} else {
 					hbitmap = img->helper.CreateDefaultDIBSection(hdc, img->width, img->height, "Unsupported compression", &bits);
 				}
 				break;
 			case 16: case 24: case 32: 
-				if (bmpinternal->compression == BI_RGB_COMPRESSION) {
+				if ((bmpinternal->compression == BI_RGB) || (bmpinternal->compression == BI_BITFIELDS)) {
 					hbitmap = img->helper.CreateTrueColorDIBSection(hdc, img->width, img->height, &bits, bitcount);
 				} else {
 					hbitmap = img->helper.CreateDefaultDIBSection(hdc, img->width, img->height, "Unsupported compression", &bits);
