@@ -4,7 +4,6 @@
 #define QOI_NO_STDIO
 #define QOI_MALLOC MYALLOC
 #define QOI_FREE MYFREE
-#define QOI_ZEROARR
 #include <qoi.h>
 
 #include <fileapi.h>
