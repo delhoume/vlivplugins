@@ -17,7 +17,7 @@ SYSLIBS = wininet.lib user32.lib gdi32.lib kernel32.lib comctl32.lib comdlg32.li
 
 all: qoi.dll
 
-qoihandler.obj : qoihandler.c qoihandler.h
+qoihandler.obj : qoihandler.c qoihandler.h qoi.h
 	$(CC) $(CFLAGS) /c qoihandler.c
 
 qoi.dll: qoihandler.obj
