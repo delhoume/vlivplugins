@@ -163,6 +163,7 @@ static HBITMAP LoadTIFFTile(ImagePtr img, HDC hdc, unsigned int x, unsigned int 
 		    TIFFReadRGBAImage(tif, img->twidth, img->theight, bits, 0);
 #else
 		    TIFFReadRGBAStrip(tif, y * img->theight, bits);
+#if 0
 		    if (y == (img->numtilesy - 1)) {
 			int offset = img->numtilesy * img->theight - img->height;
 			if (offset) {
@@ -170,6 +171,7 @@ static HBITMAP LoadTIFFTile(ImagePtr img, HDC hdc, unsigned int x, unsigned int 
 			    ZeroMemory(bits, offset * img->twidth * 4);
 			}
 		    }
+#endif
 #endif
 		    SwapBytes(bits, img->twidth * img->theight);
 		}
@@ -188,6 +190,7 @@ static HBITMAP LoadTIFFTile(ImagePtr img, HDC hdc, unsigned int x, unsigned int 
 			TIFFReadScanline(tif, (char*)bits + (img->theight - idx - 1) * realwidth, idx, 0);
 #else
 		    TIFFReadEncodedStrip(tif, y, (char*)bits, img->theight * img->twidth);
+#if 0
 		    if (y == (img->numtilesy - 1)) {
 			int offset = img->numtilesy * img->theight - img->height;
 			if (offset) {
@@ -196,6 +199,7 @@ static HBITMAP LoadTIFFTile(ImagePtr img, HDC hdc, unsigned int x, unsigned int 
 			    ZeroMemory((char*)bits, offset * realwidth);
 			}
 		    }
+#endif
 #endif
 		}
 	    }
