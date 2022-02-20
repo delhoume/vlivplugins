@@ -163,7 +163,8 @@ static HBITMAP LoadTIFFTile(ImagePtr img, HDC hdc, unsigned int x, unsigned int 
 		    TIFFReadRGBAImage(tif, img->twidth, img->theight, bits, 0);
 #else
 		    TIFFReadRGBAStrip(tif, y * img->theight, bits);
-#if 0
+#if 1
+// image is vertically inverted
 		    if (y == (img->numtilesy - 1)) {
 			int offset = img->numtilesy * img->theight - img->height;
 			if (offset) {

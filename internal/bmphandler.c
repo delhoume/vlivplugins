@@ -108,7 +108,8 @@ static void SetBMPDirectory(ImagePtr img, unsigned int which) {
 				}
 			}
 		}
-		bmp_internal->offset = SetFilePointer(handle, 0, 0, FILE_CURRENT);
+		//bmp_internal->offset = SetFilePointer(handle, 0, 0, FILE_CURRENT);
+		bmp_internal->offset = offset;
 		img->istiled = FALSE;
 		img->numtilesx = 1;
 		img->numtilesy = 1;
