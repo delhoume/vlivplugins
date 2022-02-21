@@ -51,8 +51,8 @@ LoadSTBTile(ImagePtr img, HDC hdc, unsigned int x, unsigned int y) {
 		hbitmap = img->helper.CreateTrueColorDIBSection(hdc, img->twidth, -(int)img->theight, &bits, 32);
 		if (bits) {
 			memcpy(bits, data, w * h * 4);
-			STBI_FREE(data);
 		}
+		STBI_FREE(data);
 	} else {
 		hbitmap = img->helper.CreateDefaultDIBSection(hdc, img->twidth, img->theight, "Error", &bits);
 	}
