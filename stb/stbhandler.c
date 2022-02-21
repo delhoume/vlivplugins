@@ -8,7 +8,12 @@
 // very simple plugin that loads PSD files using stb_image header only library
 
 static BOOL AcceptSTBImage(const unsigned char* buffer, unsigned int size) { 
-    return TRUE; 
+    if (size >= 4) {
+		if ((buffer[0] == '8') && (buffer[1] == 'B')&& (buffer[2] == 'P') && (buffer[1] == 'S')) {
+			return TRUE;
+		}
+    }
+    return FALSE;
 }
 
 const char* GetSTBDescription() { return "PSD Images"; }
