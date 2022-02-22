@@ -27,7 +27,6 @@ static BOOL OpenSTBImage(ImagePtr img, const TCHAR* name) {
 }
 
 static void SetSTBDirectory(ImagePtr img, unsigned int which) {
-    struct stb_internal* stb_internal = (struct stb_internal*)img->handler->internal;	
 	int w, h, c;	
 	if (stbi_info(img->name, &w, &h, &c)) {
         img->width = w;
