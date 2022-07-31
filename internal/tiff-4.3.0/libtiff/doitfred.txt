@@ -1,2 +1,2 @@
-cl /MD /Ox /c /I. /I..\..\libjpeg-turbo2.1.2\include /I..\..\zlib-1.2.11 *.c
+cl /MD /Ox /c /I. /I..\..\libjpeg-turbo2.1.2\include /I..\..\zlib-1.2.11 /I..\..\libwebp-0.4.1-windows-x86\dev\include *.c
 lib /out:libtiff.lib *.obj

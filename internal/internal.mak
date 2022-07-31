@@ -17,6 +17,9 @@ JPEGLIB = $(JPEG)\lib\turbojpeg-static.lib
 PNG = lpng1637
 PNGFLAGS = -I$(PNG)
 
+WEBP = libwebp-0.4.1-windows-x86
+WEBPLIB = $(WEBP)\lib\libwebp.lib
+
 DEBUG=/Ox 
 LDDEBUG=
 
@@ -30,7 +33,7 @@ SYSLIBS = wininet.lib user32.lib gdi32.lib kernel32.lib comctl32.lib comdlg32.li
 	  shell32.lib advapi32.lib version.lib strsafe.lib
 
 #CUSTOMLIBS = $(TIFF)\libtiff.lib $(JPEG)\libjpeg.lib $(PNG)\libpng.lib $(ZLIB)\zlib.lib
-CUSTOMLIBS = $(TIFF)\libtiff.lib $(JPEGLIB) $(PNG)\libpng.lib $(ZLIB)\zlib.lib 
+CUSTOMLIBS = $(TIFF)\libtiff.lib $(JPEGLIB) $(PNG)\libpng.lib $(ZLIB)\zlib.lib $(WEBPLIB)
 OBJECTS = inthandler.obj jpghandler.obj ppmhandler.obj bmphandler.obj pnghandler.obj tifhandler.obj
 
 all: vliv.dll 
