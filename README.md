@@ -6,8 +6,8 @@ Plugins for various image formats
   - TIFF
   - BMP
   - PPM P6
+  - WEBP
 - AVI
-- WEBP
 - JPEG2000
 - QOI
 - WIC
