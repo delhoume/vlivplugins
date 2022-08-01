@@ -1,5 +1,5 @@
 #include <webp/decode.h>
-#include <webp.h>
+#include "webphandler.h"
 
 static BOOL AcceptWEBPImage(const unsigned char* buffer, unsigned int size) { 
 if (size >= 12) { 
@@ -74,7 +74,7 @@ static void CloseWEBPImage(ImagePtr img) {
     }
 }
 
-void RegisterVlivPlugin(ImagePtr img) {
+void RegisterWEBPHandler(ImagePtr img) {
     img->helper.Register(AcceptWEBPImage,
 			 GetWEBPDescription,
 			 GetWEBPExtension,

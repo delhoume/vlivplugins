@@ -1,5 +1,5 @@
 #include <vliv.h>
-#include <ppmhandler.h>
+#include "ppmhandler.h"
 
 struct ppm_internal {
     LONG pos;

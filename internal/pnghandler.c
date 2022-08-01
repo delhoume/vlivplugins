@@ -1,4 +1,4 @@
-#include <pnghandler.h>
+#include "pnghandler.h"
 #include <png.h>
 
 static const unsigned int pngtileheight = 256;

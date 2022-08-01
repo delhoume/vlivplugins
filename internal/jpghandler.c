@@ -1,4 +1,4 @@
-#include <jpghandler.h>
+#include "jpghandler.h"
 
 #include <stdio.h>
 

@@ -3,6 +3,6 @@
 
 #include <vliv.h>
 
-void __declspec(dllexport) RegisterVlivPlugin(ImagePtr img);
+void RegisterWEBPHandler(ImagePtr img);
 
 #endif

@@ -1,4 +1,4 @@
-#include <bmphandler.h>
+#include "bmphandler.h"
 
 static BOOL AcceptBMPImage(const unsigned char* buffer, unsigned int size) {
     if (size >= 2) {

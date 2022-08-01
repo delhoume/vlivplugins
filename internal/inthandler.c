@@ -5,6 +5,7 @@
 #include <bmphandler.h>
 #include <pnghandler.h>
 #include <ppmhandler.h>
+#include <webphandler.h>
 
 void RegisterVlivPlugin(ImagePtr img) {
     RegisterJPGHandler(img);
@@ -12,5 +13,6 @@ void RegisterVlivPlugin(ImagePtr img) {
     RegisterBMPHandler(img);
     RegisterTIFHandler(img);
     RegisterPNGHandler(img);
+    RegisterWEBPHandler(img);
 }
 

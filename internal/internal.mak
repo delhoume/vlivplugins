@@ -5,19 +5,20 @@ LD  = link
 VLIVDIR = ..\..\vliv\src
 
 TIFF = tiff-4.3.0\libtiff	
-TIFFFLAGS = -I$(TIFF)
+TIFFFLAGS = /I$(TIFF)
 
 ZLIB = zlib-1.2.11
-ZLIBFLAGS = -I$(ZLIB)
+ZLIBFLAGS = /I$(ZLIB)
 
 JPEG = libjpeg-turbo2.1.2
-JPEGFLAGS = -I$(JPEG)\include
+JPEGFLAGS = /I$(JPEG)\include
 JPEGLIB = $(JPEG)\lib\turbojpeg-static.lib
 
 PNG = lpng1637
-PNGFLAGS = -I$(PNG)
+PNGFLAGS = /I$(PNG)
 
 WEBP = libwebp-0.4.1-windows-x86
+WEBPFLAGS = /I$(WEBP)\include
 WEBPLIB = $(WEBP)\lib\libwebp.lib
 
 DEBUG=/Ox 
@@ -34,7 +35,7 @@ SYSLIBS = wininet.lib user32.lib gdi32.lib kernel32.lib comctl32.lib comdlg32.li
 
 #CUSTOMLIBS = $(TIFF)\libtiff.lib $(JPEG)\libjpeg.lib $(PNG)\libpng.lib $(ZLIB)\zlib.lib
 CUSTOMLIBS = $(TIFF)\libtiff.lib $(JPEGLIB) $(PNG)\libpng.lib $(ZLIB)\zlib.lib $(WEBPLIB)
-OBJECTS = inthandler.obj jpghandler.obj ppmhandler.obj bmphandler.obj pnghandler.obj tifhandler.obj
+OBJECTS = inthandler.obj jpghandler.obj ppmhandler.obj bmphandler.obj pnghandler.obj tifhandler.obj webphandler.obj
 
 all: vliv.dll 
 
@@ -52,6 +53,9 @@ pnghandler.obj : pnghandler.c pnghandler.h
 
 tifhandler.obj : tifhandler.c tifhandler.h
 	$(CC) $(CFLAGS) $(TIFFFLAGS) $(ZLIBFLAGS) /c tifhandler.c
+
+webphandler.obj : webphandler.c webphandler.h
+	$(CC) $(CFLAGS) $(WEBPFLAGS) /c webphandler.c
 
 inthandler.obj : inthandler.c inthandler.h
 	$(CC) $(CFLAGS) /c inthandler.c

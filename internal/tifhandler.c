@@ -1,4 +1,4 @@
-#include <tifhandler.h>
+#include "tifhandler.h"
 
 #include <tiffio.h>
 
