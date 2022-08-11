@@ -22,6 +22,7 @@ const char* GetEXRExtension() { return "*.EXR"; }
 
 struct exr_internal {
 	unsigned char* image8;
+	const char* err = NULL;
 };
 
 static BOOL OpenEXRImage(ImagePtr img, const TCHAR* name) {
@@ -45,28 +46,29 @@ static void SwapBytes(unsigned int* bits, unsigned int num) {
 static void SetEXRDirectory(ImagePtr img, unsigned int which) {
     struct exr_internal* exr_internal = (struct exr_internal*)img->handler->internal;
 	int width, height;
-	const char* err = NULL;
 	float* image;
-	if (LoadEXR(&image, &width, &height, img->name, &err) == TINYEXR_SUCCESS) {
-        img->width = width;
-        img->height  = height;
-        img->numtilesx = 1;
-		img->numtilesy = 1;
-		img->twidth = img->width;
-		img->theight = img->height;
-		img->subfiletype = Normal;
-        img->istiled = FALSE;
-		// convert image to 8 bits
-		unsigned char* image8 = stbi__hdr_to_ldr(image, img->twidth, img->theight, 4);
+
+	if (LoadEXR(&image, &width, &height, img->name, &(exr_internal->err)) == TINYEXR_SUCCESS) {
+ 		// convert image to 8 bits
+		unsigned char* image8 = stbi__hdr_to_ldr(image, width, height, 4);
 		// leak or crash ? I choose leak for now
 		// free(image);
 		// now convert to BGRA
-		SwapBytes((unsigned int*)image8, img->twidth * img->theight);
+		SwapBytes((unsigned int*)image8, width * height);
 		exr_internal->image8 = image8;
-	} else {
-		FreeEXRErrorMessage(err);
+	}  else {
+		width = 500;
+        height  = 500;
 	}
- }
+         img->width = width;
+        img->height  = height;
+	img->twidth = img->width;
+	img->theight = img->height;
+	img->numtilesx = 1;
+	img->numtilesy = 1;
+	img->subfiletype = Normal;
+	img->istiled = FALSE;
+}
  
 
 static HBITMAP
@@ -75,7 +77,8 @@ LoadEXRTile(ImagePtr img, HDC hdc, unsigned int x, unsigned int y) {
    	unsigned int* bits = 0;
     HBITMAP hbitmap = 0;    
    if (exr_internal->image8 == 0) {
-	   hbitmap = img->helper.CreateDefaultDIBSection(hdc, img->twidth, img->theight, "EXR", &bits);
+	   hbitmap = img->helper.CreateDefaultDIBSection(hdc, img->twidth, img->theight, exr_internal->err, &bits);
+	   FreeEXRErrorMessage(exr_internal->err);
    } else {
 		hbitmap = img->helper.CreateTrueColorDIBSection(hdc, img->twidth, -((int)img->theight), &bits, 32);
 		memcpy(bits, exr_internal->image8, img->twidth* img->theight * 4);
