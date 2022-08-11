@@ -1,4 +1,9 @@
-#define NOMINMAX
+//#define NOMINMAX
+
+#define TINYEXR_USE_MINIZ 0
+#define TINYEXR_USE_STB_ZLIB 1
+#define TINYEXR_IMPLEMENTATION
+#include <tinyexr.h>
 
 #define WIN32_LEAN_AND_MEAN 
 #include <exrhandler.h>
@@ -8,10 +13,6 @@
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include <stb_image_write.h>
 
-#define TINYEXR_USE_MINIZ 0
-#define TINYEXR_USE_STB_ZLIB 1
-#define TINYEXR_IMPLEMENTATION
-#include <tinyexr.h>
 
 // very simple plugin that loads EXR files using tinyexr header only library
 
