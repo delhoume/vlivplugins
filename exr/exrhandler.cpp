@@ -60,8 +60,8 @@ static void SetEXRDirectory(ImagePtr img, unsigned int which) {
 		width = 500;
         height  = 500;
 	}
-         img->width = width;
-        img->height  = height;
+	img->width = width;
+	img->height  = height;
 	img->twidth = img->width;
 	img->theight = img->height;
 	img->numtilesx = 1;
