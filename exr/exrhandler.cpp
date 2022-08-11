@@ -1,5 +1,3 @@
-//#define NOMINMAX
-
 #define TINYEXR_USE_MINIZ 0
 #define TINYEXR_USE_STB_ZLIB 1
 #define TINYEXR_IMPLEMENTATION
@@ -50,8 +48,8 @@ static void SetEXRDirectory(ImagePtr img, unsigned int which) {
 		img->theight = img->height;
 		img->subfiletype = Normal;
         img->istiled = FALSE;
-	}
-	FreeEXRErrorMessage(err);
+	} else 
+		FreeEXRErrorMessage(err);
  }
  
  // asm code by Pascal Massimino
@@ -135,7 +133,7 @@ LoadEXRTile(ImagePtr img, HDC hdc, unsigned int x, unsigned int y) {
 
 static void CloseEXRImage(ImagePtr img) {
     struct exr_internal* exr_internal = (struct exr_internal*)img->handler->internal;
-	free(exr_internal->image);
+//	free(exr_internal->image);
 }
 
 void RegisterVlivPlugin(ImagePtr img) {
