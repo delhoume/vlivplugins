@@ -8,6 +8,7 @@ Plugins for various image formats
   - PPM P6
   - WEBP
 - AVI
+- EXR
 - JPEG2000
 - QOI
 - WIC
