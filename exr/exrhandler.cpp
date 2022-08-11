@@ -61,8 +61,8 @@ LoadEXRTile(ImagePtr img, HDC hdc, unsigned int x, unsigned int y) {
     unsigned int* bits = 0;
 	hbitmap = img->helper.CreateTrueColorDIBSection(hdc, img->twidth, -((int)img->theight), &bits, 32);
 	// convert image to BGR
-	for (int y = 0; y < img->theight; ++y) {
-		for (int x = 0; x < img->twidth; ++x) {
+	for (unsigned int y = 0; y < img->theight; ++y) {
+		for (unsigned int x = 0; x < img->twidth; ++x) {
 			float* imagep = image + (y * img->twidth * 4) + x * 4;
 			float r = imagep[0];
 			float g = imagep[1];
