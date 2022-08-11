@@ -52,6 +52,43 @@ static void SetEXRDirectory(ImagePtr img, unsigned int which) {
 	}
 	FreeEXRErrorMessage(err);
  }
+ 
+ // asm code by Pascal Massimino
+static void SwapBytes(unsigned int* bits, unsigned int num) {
+#if 1
+    if (num & 1) {
+	unsigned int pixel = *bits;
+	*bits = ((pixel << 16) & 0xff0000) | (pixel & 0xff00ff00) | ((pixel >> 16) & 0xff);
+	++bits;
+    }
+    num >>= 1;
+    _asm {
+	push ebx;
+	mov edx, bits;
+	mov ecx, num;
+	lea edx,[edx+8*ecx];
+	neg ecx;
+    LoopS:
+	mov eax, [edx+8*ecx];
+	mov ebx, [edx+8*ecx+4];
+	bswap eax;
+	bswap ebx;
+	ror eax, 8;
+	ror ebx, 8;
+	mov [edx+8*ecx],eax;
+	mov [edx+8*ecx+4],ebx;
+	inc ecx;
+	jl LoopS;
+	pop ebx;
+    }
+#else
+    while (--num) {
+	unsigned int pixel = *bits;
+	*bits = ((pixel << 16) & 0xff0000) | (pixel & 0xff00ff00) | ((pixel >> 16) & 0xff);
+	++bits;
+    }
+#endif
+}
 
 static HBITMAP
 LoadEXRTile(ImagePtr img, HDC hdc, unsigned int x, unsigned int y) {
@@ -60,7 +97,15 @@ LoadEXRTile(ImagePtr img, HDC hdc, unsigned int x, unsigned int y) {
     HBITMAP hbitmap = 0;    
     unsigned int* bits = 0;
 	hbitmap = img->helper.CreateTrueColorDIBSection(hdc, img->twidth, -((int)img->theight), &bits, 32);
-	// convert image to BGR
+#if 1
+	// convert image to 8 bits
+	unsigned char* image8 = stbi__hdr_to_ldr(image, img->twidth, img->theight, 4);
+	// now convert to BGRA
+	SwapBytes((unsigned int*)image8, img->twidth * img->theight);
+	memcpy(bits, image8, img->twidth* img->theight * 4);
+	free(image8);
+#else
+	// convert image to BGRA
 	for (unsigned int y = 0; y < img->theight; ++y) {
 		for (unsigned int x = 0; x < img->twidth; ++x) {
 			float* imagep = image + (y * img->twidth * 4) + x * 4;
@@ -83,6 +128,7 @@ LoadEXRTile(ImagePtr img, HDC hdc, unsigned int x, unsigned int y) {
 			destp[3] = 255;
 		}
 	}
+#endif
 	return hbitmap;
 }
 
