@@ -68,6 +68,10 @@ LoadEXRTile(ImagePtr img, HDC hdc, unsigned int x, unsigned int y) {
 			float g = imagep[1];
 			float b = imagep[2];
 			
+			if (r >= 1.0) r = 1.0;
+			if (g >= 1.0) g = 1.0;
+			if (b >= 1.0) b = 1.0;
+			
 			unsigned char bb = (unsigned char)(b * 255.0);
 			unsigned char gg = (unsigned char)(g * 255.0);
 			unsigned char rr = (unsigned char)(r * 255.0);
