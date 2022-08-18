@@ -48,11 +48,12 @@ static void SetEXRDirectory(ImagePtr img, unsigned int which) {
 	int width, height;
 	float* image;
 
-	if (LoadEXR(&image, &width, &height, img->name, &(exr_internal->err)) == TINYEXR_SUCCESS) {
+	int ret = LoadEXR(&image, &width, &height, img->name, &(exr_internal->err));
+	if (ret == TINYEXR_SUCCESS) {
  		// convert image to 8 bits
 		unsigned char* image8 = stbi__hdr_to_ldr(image, width, height, 4);
 		// leak or crash ? I choose leak for now
-		// free(image);
+	    //free(image);
 		// now convert to BGRA
 		SwapBytes((unsigned int*)image8, width * height);
 		exr_internal->image8 = image8;
