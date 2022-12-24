@@ -17,6 +17,7 @@ struct bmp_internal {
     unsigned short bitcount;
     unsigned int compression;
     unsigned int paloffset;
+	int originalheight;
 	HANDLE handle;
 };
 
@@ -31,8 +32,8 @@ static BOOL OpenBMPImage(ImagePtr img, const TCHAR* name) {
     return TRUE;
 }
 
-static unsigned int ReadInt(HANDLE handle) {
-    unsigned int buf;
+static int ReadInt(HANDLE handle) {
+    int buf;
 	DWORD readbytes;
 	ReadFile(handle, &buf, sizeof(unsigned int), &readbytes, 0);
      return buf;
@@ -77,8 +78,11 @@ static void SetBMPDirectory(ImagePtr img, unsigned int which) {
 		headersize = ReadInt(handle);
 		headerpos = SetFilePointer(handle, 0, 0, FILE_CURRENT);
 		if ((headersize == WIN_NEW || headersize == OS2_NEW || headersize == WIN_V5)) {
+			int height;
 			img->width = ReadInt(handle);
-			img->height = ReadInt(handle);
+			height = ReadInt(handle);
+			img->height = height >= 0 ? height : -height;
+			bmp_internal->originalheight = height;
 			ReadShort(handle); // planes
 			bmp_internal->bitcount = ReadShort(handle);
 			bmp_internal->compression = ReadInt(handle);
@@ -144,14 +148,14 @@ LoadBMPTile(ImagePtr img, HDC hdc, unsigned int x, unsigned int y) {
 		switch (bitcount) {
 			case 1: case 4: case 8:
 				if (bmpinternal->compression == BI_RGB ) {
-					hbitmap = img->helper.CreateIndexedDIBSection(hdc, img->width, img->height, &bits, FillBMPPalette, (void*)bmpinternal);
+					hbitmap = img->helper.CreateIndexedDIBSection(hdc, img->width, bmpinternal->originalheight, &bits, FillBMPPalette, (void*)bmpinternal);
 				} else {
 					hbitmap = img->helper.CreateDefaultDIBSection(hdc, img->width, img->height, "Unsupported compression", &bits);
 				}
 				break;
 			case 16: case 24: case 32: 
 				if ((bmpinternal->compression == BI_RGB) || (bmpinternal->compression == BI_BITFIELDS)) {
-					hbitmap = img->helper.CreateTrueColorDIBSection(hdc, img->width, img->height, &bits, bitcount);
+					hbitmap = img->helper.CreateTrueColorDIBSection(hdc, img->width, bmpinternal->originalheight, &bits, bitcount);
 				} else {
 					hbitmap = img->helper.CreateDefaultDIBSection(hdc, img->width, img->height, "Unsupported compression", &bits);
 				}
