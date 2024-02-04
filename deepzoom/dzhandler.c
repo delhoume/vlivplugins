@@ -29,10 +29,13 @@ static BOOL OpenDPZImage(ImagePtr img, const TCHAR* name) {
     struct DPZ_internal* new_internal = (struct DPZ_internal*)MYALLOC(sizeof(struct DPZ_internal));
     unsigned int maxdim = img->handler->internal->width > img->handler->internal->height ? img->handler->internal->width : img->handler->internal->height;
     img->handler->internal = (void*)new_internal;
+
+    // hardcoded until we have a JSON / XML parser
     wcscpy(new_internal->host, L"http://127.0.0.1");
     wcscpy(new_internal->tile, L"CassiniDeepZoom_files/%d/%d_%d.jpeg";
     new_internal->width = 199693;
     new_internal->height = 194888;
+    new_internal->tilesize = 512;
 
     new_internal->minlevel = 10; // first to be 1024 at least
     new_internal->maxlevel = ceil(log(maxdim));
@@ -74,7 +77,7 @@ LoadDPZTile(ImagePtr img, HDC hdc, unsigned int x, unsigned int y) {
         HINTERNET connect, request, results;
         connect = WinHttpConnect(session, DPZ_internal->host, INTERNET_DEFAULT_HTTPS_PORT, 0 );
         if(connect) {
-            LPWSTR pBuffer  NULL;
+            LPWSTR pBuffer = NULL;
             // level, column, row
             FormatMessage(FORMAT_MESSAGE_FROM_STRING| FORMAT_MESSAGE_ALLOCATE_BUFFER, DPZ_internal->tile, 0, 0, &buffer, 0, img->currentdir, x, y);
             request = WinHttpOpenRequest(connect, buffer, NULL, NULL, WINHTTP_NO_REFERER, 
@@ -82,7 +85,7 @@ LoadDPZTile(ImagePtr img, HDC hdc, unsigned int x, unsigned int y) {
 
             // Send a request.
             if(request)
-                results = WinHttpSendRequest(request, WINHTTP_NO_ADDITIONAL_HEADERS, 0, WINHTTP_NO_REQUEST_DATA, 0, 0, 0 );
+                result = WinHttpSendRequest(request, WINHTTP_NO_ADDITIONAL_HEADERS, 0, WINHTTP_NO_REQUEST_DATA, 0, 0, 0 );
             // End the request.
             if(results)
                 results = WinHttpReceiveResponse(request, NULL );
