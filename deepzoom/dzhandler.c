@@ -31,15 +31,23 @@ struct DPZ_internal
     HINTERNET session;
 };
 
-static BOOL OpenDPZImage(ImagePtr img, const TCHAR *name)
-{
+static void ShowLastError(LPWSTR where) [
+     LPWSTR messageBuffer = NULL;
+    FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+                 NULL, GetLastError(), MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&messageBuffer, 0, NULL);
+    MessageBox(0, messageBuffer, messageBuffer, MB_OK);
+    LocalFree(messageBuffer);
+}
+
+
+static BOOL OpenDPZImage(ImagePtr img, const TCHAR *name) {
     struct DPZ_internal *new_internal = (struct DPZ_internal *)MYALLOC(sizeof(struct DPZ_internal));
     unsigned int maxdim;
     img->handler->internal = (void *)new_internal;
 
     // hardcoded until we have a JSON / XML parser
     wcscpy(new_internal->host, L"127.0.0.1");
-    wcscpy(new_internal->tile, L"/Cassini/CassiniDeepZoom_files/18/0_0.jpeg");
+    wcscpy(new_internal->tile, L"/Cassini/CassiniDeepZoom_files/%1/%2_%3.jpeg");
     new_internal->width = 199693;
     new_internal->height = 194888;
     new_internal->tilesize = 512;
@@ -55,15 +63,14 @@ static BOOL OpenDPZImage(ImagePtr img, const TCHAR *name)
     return TRUE;
 }
 
-static void SetDPZDirectory(ImagePtr img, unsigned int which)
-{
+static void SetDPZDirectory(ImagePtr img, unsigned int which) {
     struct DPZ_internal *DPZ_internal = (struct DPZ_internal *)img->handler->internal;
     unsigned int width = DPZ_internal->width;
     unsigned int height = DPZ_internal->height;
-    // for (unsigned int lvl = 0; lvl < which; ++lvl) {
-    //     width  = ( width + 1 ) >> 1;
-    //     height = ( height + 1 ) >> 1;
-    // }
+     for (unsigned int lvl = 0; lvl < which; ++lvl) {
+         width  = ( width + 1 ) >> 1;
+         height = ( height + 1 ) >> 1;
+    }
     img->width = width;
     img->height = height;
     img->istiled = TRUE;
@@ -75,8 +82,7 @@ static void SetDPZDirectory(ImagePtr img, unsigned int which)
 }
 
 static HBITMAP
-LoadDPZTile(ImagePtr img, HDC hdc, unsigned int x, unsigned int y)
-{
+LoadDPZTile(ImagePtr img, HDC hdc, unsigned int x, unsigned int y) {
     struct DPZ_internal *DPZ_internal = (struct DPZ_internal *)img->handler->internal;
     HBITMAP hbitmap = 0;
     unsigned int *bits = 0;
@@ -85,59 +91,57 @@ LoadDPZTile(ImagePtr img, HDC hdc, unsigned int x, unsigned int y)
     {
         HINTERNET connect, request;
         connect = WinHttpConnect(DPZ_internal->session, DPZ_internal->host, 8000, 0); // INTERNET_DEFAULT_HTTP_PORT, 0);
-        if (connect)
-        {
+        if (connect) {
             LPWSTR pBuffer = NULL;
             // level, column, row
-            DWORD_PTR pArgs[] = {(DWORD_PTR)img->currentdir, (DWORD_PTR)x, (DWORD_PTR)y};
-            FormatMessage(FORMAT_MESSAGE_FROM_STRING | FORMAT_MESSAGE_ALLOCATE_BUFFER, DPZ_internal->tile, 0, 0,
-                          (LPWSTR)&pBuffer, 0, (va_list *)pArgs);
-
-            request = WinHttpOpenRequest(connect, L"GET", DPZ_internal->tile, NULL, WINHTTP_NO_REFERER,
-                                         WINHTTP_DEFAULT_ACCEPT_TYPES, WINHTTP_FLAG_SECURE);
-            LocalFree(pBuffer);
-            // Send a request.
-            if (request)
-            {
-                BOOL ret = WinHttpSendRequest(request, WINHTTP_NO_ADDITIONAL_HEADERS, 0, WINHTTP_NO_REQUEST_DATA, 0, 0, 0);
-                // End the request.
-                if (ret)
-                {
-                    ret = WinHttpReceiveResponse(request, NULL);
-
-                    // Keep checking for data until there is nothing left.
-                    if (ret)
-                    {
-                        unsigned char *data;
-                        unsigned int w, h, d;
-                        DWORD dwSize = 0;
-                        DWORD dataSize = 0;
-                        DWORD downloaded;
-                        MessageBox(0, DPZ_internal->tile, "ok", MB_OK);
-                        do
-                        {
-                            WinHttpQueryDataAvailable(request, &dwSize);
-                            if (dwSize)
-                            {
-                                data = MYREALLOC(data, dataSize + dwSize);
-                                WinHttpReadData(request, (LPVOID)(data + dataSize), dwSize, &downloaded);
-                                dataSize += dwSize;
-                            }
-                        } while (dwSize > 0);
-                        // now we have the image in buffer, decode it
-                        unsigned char *stb_data = stbi_load_from_memory(data, dataSize, &w, &h, &d, 4);
-                        // might have to swap RGB
-                        memcpy(bits, stb_data, w * h * 4);
-                        stbi_image_free(stb_data);
-                        MYFREE(data);
-                    } else  {
-                        LPWSTR messageBuffer = NULL;
-                        size_t size = FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
-                                                    NULL, GetLastError(), MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&messageBuffer, 0, NULL);
-                        MessageBox(0, messageBuffer, messageBuffer, MB_OK);
-                        LocalFree(messageBuffer);
+            unsigned int level = DPZ_internal->maxlevel - img->currentdir;
+            DWORD_PTR pArgs[] = {(DWORD_PTR)level, (DWORD_PTR)x, (DWORD_PTR)y}; // FORMAT_MESSAGE_ARGUMENT_ARRAY
+            if (FormatMessage(FORMAT_MESSAGE_FROM_STRING | FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_ARGUMENT_ARRAY, 
+                            DPZ_internal->tile, 0, 0,(LPWSTR)&pBuffer, 0, pArgs) == 0) {
+                ShowLastError("buildin' URL string");
+                MessageBox(0, pBuffer, "Url", MB_OK);
+            } else {
+                request = WinHttpOpenRequest(connect, L"GET", DPZ_internal->tile, NULL, WINHTTP_NO_REFERER,
+                                            WINHTTP_DEFAULT_ACCEPT_TYPES, WINHTTP_FLAG_SECURE);
+                LocalFree(pBuffer);
+                // Send a request.
+                if (request) {
+                    BOOL ret = WinHttpSendRequest(request, WINHTTP_NO_ADDITIONAL_HEADERS, 0, WINHTTP_NO_REQUEST_DATA, 0, 0, 0);
+                    // End the request.
+                    if (ret)  {
+                        ret = WinHttpReceiveResponse(request, NULL);
+                        // Keep checking for data until there is nothing left.
+                        if (ret) {
+                            unsigned char *data;
+                            unsigned int w, h, d;
+                            DWORD dwSize = 0;
+                            DWORD dataSize = 0;
+                            DWORD downloaded;
+                            do {
+                                WinHttpQueryDataAvailable(request, &dwSize);
+                                if (dwSize) {
+                                    data = MYREALLOC(data, dataSize + dwSize);
+                                    WinHttpReadData(request, (LPVOID)(data + dataSize), dwSize, &downloaded);
+                                    dataSize += dwSize;
+                                }
+                            } while (dwSize > 0);
+                            // now we have the image in buffer, decode it
+                            unsigned char *stb_data = stbi_load_from_memory(data, dataSize, &w, &h, &d, 4);
+                            // might have to swap RGB
+                            memcpy(bits, stb_data, w * h * 4);
+                            stbi_image_free(stb_data);
+                            MYFREE(data);
+                        } else  {
+                            ShowLastError(L"WinHttpReceiveResponse");
+                        }
+                    } else {
+                        ShowLastError(L"WinHttpSendRequest");
                     }
+                } else {
+                    ShowLastError(L"WinHttpOpenRequest");
                 }
+            } else {
+                ShowLastError("WinHttpConnect");
             }
         }
         // Close any open handles.
