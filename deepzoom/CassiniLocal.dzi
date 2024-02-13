@@ -1,0 +1,9 @@
+; This is a simple way of describing a Deep Zoom image
+[Image]
+server = 127.0.0.1
+TileUrl = "/Cassini/CassiniDeepZoom_files/%1/%2_%3.jpg"
+Width = 199693
+Height = 194888
+TileSize = 512
+Overlap = 0
+Format = jpg

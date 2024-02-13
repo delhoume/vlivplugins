@@ -9,18 +9,19 @@
 #define STBI_ONLY_JPEG
 #include <stb_image.h>
 
+#define INI_IMPLEMENTATION
+#include <ini.h>
+
 #include <winhttp.h>
 
-static BOOL AcceptDPZImage(const unsigned char *buffer, unsigned int size)
-{
+static BOOL AcceptDPZImage(const unsigned char *buffer, unsigned int size) {
     return TRUE;
 }
 
 const char *GetDPZDescription() { return "Deep Zoom Images"; }
 const char *GetDPZExtension() { return "*.DZI"; }
 
-struct DPZ_internal
-{
+struct DPZ_internal {
     WCHAR host[128];
     WCHAR tile[128];
     unsigned int minlevel;
@@ -39,23 +40,57 @@ static void ShowLastError(LPWSTR where) [
     LocalFree(messageBuffer);
 }
 
+static char* ReadIni(const char* filename) {
+    HANDLE file = CreateFile(img->name, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 
+                FILE_ATTRIBUTE_NORMAL, NULL);
+    if (file) {
+        DWORD size = GetFileSize(file, NULL);
+        char* contents = MYALLOC(size);
+        ReadFile(file, contents, size, 0, 0);
+        CloseHandle(file);
+        return contents;
+    }
+    return NULL;
+}
 
+   // my DZI files are simple .ini ...
 static BOOL OpenDPZImage(ImagePtr img, const TCHAR *name) {
     struct DPZ_internal *new_internal = (struct DPZ_internal *)MYALLOC(sizeof(struct DPZ_internal));
     unsigned int maxdim;
-    img->handler->internal = (void *)new_internal;
+    char* ini_data = ReadIni(name);
+    if (ini_data == NULL) return FALSE;
+    ini_t* ini = ini_load(ini_data, NULL);
+    MYFREE(ini_data);
+    int section = ini_find_section(ini, INI_GLOBAL_SECTION, "Image", 0);
+    int server_index = ini_find_property(init, section, "Server", 0);
+    char const* server = ini_property_value(ini, section, server_index)
+    int tileurl_index = ini_find_property(init, section, "TileUrl", 0);
+    char const* tileurl = ini_property_value(ini, section, server_index)
+    int width_index = ini_find_property(init, section, "Width", 0);
+    unsigned int width =  = ini_property_value(ini, section, width_index);
+    int height_index = ini_find_property(init, section, "Height", 0);
+    unsigned int height =  = ini_property_value(ini, section, height_index);
+    int tile_size_index = ini_find_property(init, section, "TileSize", 0);
+    char const* tile_size = ini_property_value(ini, section, tile_size_index)
+    int min_level_index = ini_find_property(init, section, "MinLevel", 0);
+    char const* min_level = ini_property_value(ini, section, min_level_index)
+    int max_level_index = ini_find_property(init, section, "MaxLevel", 0);
+    char const* max_level = ini_property_value(ini, section, max_level_index);
+    ini_destroy(ini);
 
-    // hardcoded until we have a JSON / XML parser
-    wcscpy(new_internal->host, L"127.0.0.1");
-    wcscpy(new_internal->tile, L"/Cassini/CassiniDeepZoom_files/%1/%2_%3.jpeg");
-    new_internal->width = 199693;
-    new_internal->height = 194888;
-    new_internal->tilesize = 512;
+   img->handler->internal = (void *)new_internal;
+
+    // MBToWideChar ?
+    MultiByteToWideChar(CP_UTF8, )0, server, -1, new_internal->host, 128);
+    MultiByteToWideChar(CP_UTF8, )0, tileurl, -1, new_internal->tile, 128);
+    new_internal->width = width;
+    new_internal->height = height;
+    new_internal->tilesize = tile_size;
     maxdim = (new_internal->width > new_internal->height) ? new_internal->width : new_internal->height;
-    new_internal->minlevel = 10; // first to be 1024 at least
-    new_internal->maxlevel = ceil(log(maxdim));
+    new_internal->minlevel = minlevel; // first to be 1024 at least
+    new_internal->maxlevel = ceil(log(maxdim) / log(2.0));
 
-    img->numdirs = 1; // new_internal->maxlevel - new_internal->minlevel;
+    img->numdirs = new_internal->maxlevel - new_internal->minlevel;
     img->supportmt = 0;
     img->currentdir = 0;
 
