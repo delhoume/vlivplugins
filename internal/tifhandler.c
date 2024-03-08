@@ -17,10 +17,16 @@ static BOOL AcceptTIFFImage(const unsigned char* buffer, unsigned int size) {
     return FALSE;
 }
 
+struct TIFF_internal {
+	TIFF* tifin;
+};
+
 static const char* GetTIFFDescription() { return "TIFF Images"; }
 static const char* GetTIFFExtension() { return "*.tif;*.tiff;*.btf"; }
 
 static BOOL OpenTIFFImage(ImagePtr img, const TCHAR* name) {
+	struct TIFF_internal *new_internal = (struct TIFF_internal *)MYALLOC(sizeof(struct TIFF_internal));
+	img->handler->internal = (void *)new_internal;
     TIFF* tif = TIFFOpen(name, "rM");
     if (tif) {
 	char* make = 0;
@@ -32,18 +38,19 @@ static BOOL OpenTIFFImage(ImagePtr img, const TCHAR* name) {
 	} else {
 	    img->numdirs = TIFFNumberOfDirectories(tif);
 	}
-	img->supportmt = 1;
+	img->supportmt = 0;
 	img->currentdir = 0;
-	TIFFClose(tif);
+	new_internal->tifin = tif;
 	return TRUE;
     }
     return FALSE;
 }
 
 static void SetTIFFDirectory(ImagePtr img, unsigned int which) {
-    uint16_t subfiletype;
-    TIFF* tif = TIFFOpen(img->name, "rM");
+     struct TIFF_internal *tiff_internal = (struct TIFF_internal *)img->handler->internal;
+    TIFF* tif = tiff_internal->tifin;
     if (tif) {
+  	uint16_t subfiletype;
 	TIFFSetDirectory(tif, which);
 	TIFFGetField(tif, TIFFTAG_IMAGEWIDTH, &img->width);
 	TIFFGetField(tif, TIFFTAG_IMAGELENGTH, &img->height);
@@ -84,7 +91,6 @@ static void SetTIFFDirectory(ImagePtr img, unsigned int which) {
 	    }
 #endif
 	}
-	TIFFClose(tif);
     }
 }
 
@@ -105,7 +111,7 @@ static void FillTIFF(BITMAPINFO* bmi, unsigned int idx, void* arg) {
 
 // asm code by Pascal Massimino
 static void SwapBytes(unsigned int* bits, unsigned int num) {
-#if 1
+#if !defined(_WIN64)
     if (num & 1) {
 	unsigned int pixel = *bits;
 	*bits = ((pixel << 16) & 0xff0000) | (pixel & 0xff00ff00) | ((pixel >> 16) & 0xff);
@@ -141,7 +147,8 @@ static void SwapBytes(unsigned int* bits, unsigned int num) {
 }
 
 static HBITMAP LoadTIFFTile(ImagePtr img, HDC hdc, unsigned int x, unsigned int y) {
-    TIFF* tif = TIFFOpen(img->name, "rM");
+     struct TIFF_internal *tiff_internal = (struct TIFF_internal *)img->handler->internal;
+    TIFF* tif = tiff_internal->tifin;
     HBITMAP hbitmap = 0;
     if (tif) {
 	TIFFSetDirectory(tif, img->currentdir);
@@ -205,12 +212,15 @@ static HBITMAP LoadTIFFTile(ImagePtr img, HDC hdc, unsigned int x, unsigned int 
 		}
 	    }
 	}
-	TIFFClose(tif);
     }
     return hbitmap;
 }
 
 static void CloseTIFFImage(ImagePtr img) {
+ struct TIFF_internal *tiff_internal = (struct TIFF_internal *)img->handler->internal;
+    TIFF* tif = tiff_internal->tifin;
+    TIFFClose(tif);
+
 }
 
 void RegisterTIFHandler(ImagePtr img) {
