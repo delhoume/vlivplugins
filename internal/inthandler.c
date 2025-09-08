@@ -11,8 +11,8 @@ void RegisterVlivPlugin(ImagePtr img) {
     RegisterJPGHandler(img);
     RegisterPPMHandler(img);
     RegisterBMPHandler(img);
-    RegisterTIFHandler(img);
-    RegisterPNGHandler(img);
-    RegisterWEBPHandler(img);
+   RegisterPNGHandler(img);
+     RegisterTIFHandler(img);
+   RegisterWEBPHandler(img);
 }
 

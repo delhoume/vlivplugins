@@ -2,30 +2,33 @@ CC  = cl
 RC  = rc
 LD  = link
 
+
+# cl /C /I../../libjpeg-turbo64\include /I..\..\zlib-1.2.11 /I..\..\libwebp-0.4.1-windows-x86\include *.c
+# lib *.obj /out:libtiff.lib
 VLIVDIR = ..\..\vliv\src
 
-TIFF = tiff-4.3.0\libtiff	
+TIFF = tiff-4.7.0\libtiff	
 TIFFFLAGS = /I$(TIFF)
-TIFFLIB = $(TIFF)\libtiff.lib
+TIFFLIB = libtiff.lib
 
-ZLIB = zlib-1.2.11
+ZLIB = zlib-1.3.1
 ZLIBFLAGS = /I$(ZLIB)
-ZLIBLIB = $(ZLIB)\zlib.lib
+ZLIBLIB = zlib.lib
 
-JPEG = libjpeg-turbo2.1.2
+JPEG = libjpeg-turbo64
 JPEGFLAGS = /I$(JPEG)\include
-JPEGLIB = $(JPEG)\lib\turbojpeg-static.lib
+JPEGLIB = jpeg-static.lib
 
-PNG = lpng1637
+PNG = lpng1650
 PNGFLAGS = /I$(PNG)
-PNGLIB = $(PNG)\libpng.lib
+PNGLIB = libpng.lib
 
-WEBP = libwebp-0.4.1-windows-x86
+WEBP = libwebp-0.4.1-windows-x64
 WEBPFLAGS = /I$(WEBP)\include
-WEBPLIB = $(WEBP)\lib\libwebp.lib
+WEBPLIB = libwebp.lib
 
-ZSTD = zstd-1.5.2
-ZSTDLIB  = $(ZSTD)\lib\zstd.lib
+ZSTD = zstd-1.5.6-win64
+ZSTDLIB  = zstd.lib
 
 DEBUG=/Ox 
 LDDEBUG=
@@ -39,7 +42,7 @@ LDFLAGS = $(LDDEBUG)
 SYSLIBS = wininet.lib user32.lib gdi32.lib kernel32.lib comctl32.lib comdlg32.lib shlwapi.lib \
 	  shell32.lib advapi32.lib version.lib strsafe.lib
 
-CUSTOMLIBS = $(TIFFLIB) $(JPEGLIB) $(PNGLIB) $(ZLIBLIB) $(WEBPLIB)
+CUSTOMLIBS = /libpath:libs $(JPEGLIB)  $(PNGLIB) $(ZLIBLIB)  $(TIFFLIB)  $(WEBPLIB)
 OBJECTS = inthandler.obj jpghandler.obj ppmhandler.obj bmphandler.obj pnghandler.obj tifhandler.obj webphandler.obj
 
 all: vliv.dll 
@@ -60,7 +63,7 @@ tifhandler.obj : tifhandler.c tifhandler.h
 	$(CC) $(CFLAGS) $(TIFFFLAGS) $(ZLIBFLAGS) /c tifhandler.c
 
 webphandler.obj : webphandler.c webphandler.h
-	$(CC) $(CFLAGS) $(WEBPFLAGS) /c webphandler.c
+ 	$(CC) $(CFLAGS) $(WEBPFLAGS) /c webphandler.c
 
 inthandler.obj : inthandler.c inthandler.h
 	$(CC) $(CFLAGS) /c inthandler.c
